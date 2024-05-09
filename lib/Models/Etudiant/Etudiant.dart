@@ -6,6 +6,7 @@ part 'EtudiantMap.dart';
 class EtudiantModel {
   EtudiantModel(
       {
+        this.id=0,
        required this.nom,
     required this.prenom,
     required this.email,
@@ -14,6 +15,7 @@ class EtudiantModel {
     required this.telephone,
     this.role="ETUDIANT"
       });
+  int id;
   String nom;
   String? prenom;
   String email;

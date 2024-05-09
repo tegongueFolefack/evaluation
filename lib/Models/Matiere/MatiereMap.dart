@@ -1,23 +1,22 @@
-// part of 'Matiere.dart';
+part of 'Matiere.dart';
 
-// // **************************************************************************
-// // JsonSerializableGenerator
-// // **************************************************************************
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
 
 
-// MatiereModel _$MatiereFromJson(Map<String, dynamic> json) {
-//   return MatiereModel(
-//       codeMat: json['codeMat'] as String,
-//       labelMat: json['labelMat'] as String,
-//       creditMat: json['creditMat'] as int,
-//       vhMat: json['vhMat'] as int,
-//       );
-// }
+MatiereModel _$MatiereFromJson(Map<String, dynamic> json) {
+  return MatiereModel(
+    id: json['id'] as int,
+     label: json['label'] as String,
+      credit: json['credit'] as int,
 
-// Map<String, dynamic> _$MatiereToJson(MatiereModel instance) =>
-//     <String, dynamic>{
-//       'codeMat': instance.codeMat,
-//       'labelMat': instance.labelMat,
-//       'creditMat': instance.creditMat,
-//       'vhMAt': instance.vhMat,
-//     };
+  );
+}
+
+Map<String, dynamic> _$MatiereToJson(MatiereModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+   'label': instance.label,
+      'credit': instance.credit,
+    };

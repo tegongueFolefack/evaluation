@@ -1,25 +1,25 @@
+import 'package:attendance/Screens/Matiere/ListMatiere.dart';
+import 'package:attendance/Screens/Question/ListQuestion.dart';
 import 'package:flutter/material.dart';
+import 'package:attendance/Screens/Etudiant/ListEtudiant.dart';
+import 'package:attendance/Screens/Enseignant/ListEnseignant.dart';
+import 'package:attendance/Screens/Epreuves/ListEpreuve.dart';
+import 'package:attendance/Screens/Evaluation/ListEvaluation.dart';
+
 
 class SevenBlocksView extends StatelessWidget {
-  const SevenBlocksView({Key? key}) : super(key: key);
+  const SevenBlocksView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Ajouter l'image comme logo dans l'appBar
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              'assets/images/LOGO.png',
-              width: 50,
-              height: 50,
-            ),
-          ),
-        ],
-        title: const Text('DashBoat'),
-        
+        title: const Text('Dashboard'),
+        backgroundColor: const Color(0xFFF93F46), // Couleur de fond de la barre d'applications
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('assets/images/LOGO.png', height: 30.0, width: 30.0),
+        ),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -31,7 +31,7 @@ class SevenBlocksView extends StatelessWidget {
               // Naviguer vers la vue listant tous les étudiants
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ListeEtudiantsView()),
+                MaterialPageRoute(builder: (context) => const EtudiantListView()),
               );
             },
           ),
@@ -39,35 +39,50 @@ class SevenBlocksView extends StatelessWidget {
             label: 'Enseignant',
             iconData: Icons.person,
             onTap: () {
-              print('Enseignant clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EnseignantListView()),
+              );
             },
           ),
           BlockWidget(
             label: 'Matieres',
             iconData: Icons.book,
             onTap: () {
-              print('Matieres clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MatiereListView()),
+              );
             },
           ),
           BlockWidget(
             label: 'Épreuves',
             iconData: Icons.assignment,
             onTap: () {
-              print('Épreuves clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EpreuveListView()),
+              );
             },
           ),
           BlockWidget(
             label: 'Évaluations',
             iconData: Icons.rate_review,
             onTap: () {
-              print('Évaluations clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const EvaluationListView()),
+              );
             },
           ),
           BlockWidget(
             label: 'Questions',
             iconData: Icons.question_answer,
             onTap: () {
-              print('Questions clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const QuestionListView()),
+              );
             },
           ),
           // Add more BlockWidget instances as needed
@@ -83,11 +98,11 @@ class BlockWidget extends StatelessWidget {
   final IconData iconData;
 
   const BlockWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.onTap,
     required this.iconData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +110,8 @@ class BlockWidget extends StatelessWidget {
       onTap: onTap,
       child: Card(
         elevation: 4,
-        margin: const EdgeInsets.all(8),
-        // Changer la couleur de l'ombre de la carte en orange
-        shadowColor: Colors.orange,
+        margin: const EdgeInsets.all(16), // Augmenter la marge pour plus d'espace
+        shadowColor: const Color.fromARGB(255, 13, 13, 13), // Changer la couleur de l'ombre
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -105,11 +119,17 @@ class BlockWidget extends StatelessWidget {
               Icon(
                 iconData,
                 size: 40,
+                color: const Color(0xFFF93F46), // Changer la couleur de l'icône
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 label,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 13, 13, 13), // Changer la couleur du texte
+                  fontFamily: 'Roboto', // Utiliser une police de caractères plus professionnelle
+                ),
               ),
             ],
           ),
@@ -119,23 +139,8 @@ class BlockWidget extends StatelessWidget {
   }
 }
 
-class ListeEtudiantsView extends StatelessWidget {
-  const ListeEtudiantsView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Liste des Étudiants'),
-      ),
-      body: Center(
-        child: Text('Liste des étudiants ici'),
-      ),
-    );
-  }
-}
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
     home: SevenBlocksView(),
   ));

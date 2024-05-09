@@ -29,52 +29,80 @@ class EnseignantService{
   }
   }
 
-  // Future<dynamic> login(UserModel e) async{
-  //   var url = Uri.parse(AppServer.LOGIN);
-  //   final response = await http.post(
-  //       url,
-  //       headers: AppServer.headers,
-  //       body:jsonEncode(e.toJson())
-  //   );
-  //   if (response.statusCode == 200){
-  //     print(response.body);
-  //     return EnseignantModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-  //   }else{
-  //     throw Exception('Failed login');
-  //   }
-  // }
+  // Méthode pour récupérer un étudiant par son ID
+  Future<EnseignantModel> getEnseignantById(int id) async {
+    try {
+      var url = Uri.parse("${AppServer.GET_ONE_ENS}$id");
+      final response = await http.get(url, headers: AppServer.headers);
+      if (response.statusCode == 200) {
+        return EnseignantModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+      } else {
+        throw Exception('Impossible de récupérer l\'énseignant');
+      }
+    } catch (e) {
+      throw Exception('$e');
+    }
+  }
 
-  // Future<dynamic> countEns() async{
-  //   var url = Uri.parse(AppServer.LIST_ENS);
-  //   final response = await http.get(url, headers:AppServer.headers);
-  //   if(response.statusCode == 200){
-  //     return jsonDecode(response.body);
-  //   }else{
-  //     return -1;
-  //   }
-  // }
+  // Méthode pour mettre à jour un étudiant
+  Future<void> updateEnseignant(int id, EnseignantModel Enseignant) async {
+    try {
+      var url = Uri.parse("${AppServer.UPDATE_ENS}/$id");
+      final response = await http.put(
+        url,
+        headers: AppServer.headers,
+        body: jsonEncode(Enseignant.toJson()),
+      );
+      if (response.statusCode != 200) {
+        throw Exception('Échec de la mise à jour de l\'étudiant');
+      }
+    } catch (e) {
+      throw Exception(' $e');
+    }
+  }
 
-  // Future<dynamic> getEns() async{
-  //   var url = Uri.parse(AppServer.LIST_ENS);
-  //   final response = await http.get(url, headers:AppServer.headers);
-  //   if(response.statusCode == 200){
-  //     return jsonDecode(response.body);
-  //   }else{
-  //     return -1;
-  //   }
-  // }
+  // Méthode pour supprimer un étudiant
+  Future<void> deleteEnseignant(int id) async {
+    try {
+      var url = Uri.parse("${AppServer.DELETE_ENS}$id");
+      final response = await http.delete(
+        url,
+        headers: AppServer.headers,
+      );
+      if (response.statusCode != 204) {
+        throw Exception('Échec de la suppression de l\'étudiant');
+      }
+    } catch (e) {
+      throw Exception('$e');
+    }
+  }
 
-  // Future<EnseignantModel> updateEns(EnseignantModel etud) async {
-  //   final response = await http.put(
-  //     Uri.parse(AppServer.UPDATE_ETUDIANT + etud.idEns.toString()),
-  //     headers: <String, String>{'Content-Type': 'application/json'},
-  //     body: jsonEncode(etud.toJson()),
-  //   );
-  //   if (response.statusCode == 200){
-  //     print(response.body);
-  //     return EnseignantModel.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-  //   }else{
-  //     throw Exception('Erreur lors de la mise à jour de l\'Enseignant');
-  //   }
-  // }
+  Future<List<EnseignantModel>> getEnseignants() async {
+  var url = Uri.parse(AppServer.LIST_ENS);
+  try {
+    final response = await http.get(url, headers: AppServer.headers);
+    if (response.statusCode == 200) {
+      // Convertir le corps de la réponse en une liste JSON
+      final List<dynamic> jsonData = json.decode(response.body);
+      
+      // Afficher les données JSON dans la console
+      print(jsonData); 
+      
+      // Afficher le corps de la réponse dans la console
+      print(response.body);
+      
+      // Créer une liste d'objets EnseignantModel à partir des données JSON
+      List<EnseignantModel> Enseignants = jsonData.map((e) => EnseignantModel.fromJson(e as Map<String, dynamic>)).toList();
+      
+     
+      
+      // Retourner la liste des étudiants
+      return Enseignants;
+    } else {
+      throw Exception('Échec de la récupération des Enseignant: ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception(' $e');
+  }
+}
 }

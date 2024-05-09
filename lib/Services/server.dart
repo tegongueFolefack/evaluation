@@ -14,7 +14,7 @@ class AppServer{
   // for Etudiant
   static const ETUDIANT = "/Etudiant";
   static const SAVE_ETUDIANT = "$API$ETUDIANT/register";
-  static const LIST_ETUDIANT = "$API$ETUDIANT/";
+  static const LIST_ETUDIANT = "$API$ETUDIANT";
   static const UPDATE_ETUDIANT = "$API$ETUDIANT/update";
   static const GET_ONE_ETUDIANT = "$API$ETUDIANT/";
   static const DELETE_ETUDIANT = "$API$ETUDIANT/delete/";
@@ -22,38 +22,45 @@ class AppServer{
   // for Enseignant
   static const ENS = "/enseignant";
   static const SAVE_ENS = "$API$ENS/register";
-  static const LIST_ENS = "$API$ENS/getAll";
-  static const UPDATE_ENS = "$API$ENS/";
-  static const GET_ONE_ENS = "$API$ENS/getOne/";
+  static const LIST_ENS = "$API$ENS";
+  static const UPDATE_ENS = "$API$ENS/update";
+  static const GET_ONE_ENS = "$API$ENS/";
   static const DELETE_ENS = "$API$ENS/delete/";
 
   // for Matiere
-  static const MAT = "/matiere";
-  static const SAVE_MAT = "$API$MAT/save";
-  static const LIST_MAT = "$API$MAT/getAll";
+  static const MAT = "/Matiere";
+  static const SAVE_MAT = "$API$MAT/add/";
+  static const LIST_MAT = "$API$MAT/";
   static const UPDATE_MAT = "$API$MAT/";
-  static const GET_ONE_MAT = "$API$MAT/getOne/";
-  static const GET_ONE_MAT_BY_ENS = "$API$MAT/getByEns/";
-  static const GET_ONE_MAT_BY_SALLE = "$API$MAT/getBySalle/";
+  static const GET_ONE_MAT = "$API$MAT/";
   static const DELETE_MAT = "$API$MAT/delete/";
 
-  // for Presence
-  static const PRESENCE = "/presence";
-  static const SAVE_PRESENCE = "$API$PRESENCE/save";
-  static const GET_ALL_BY_ETUDIANT_PRESENCE = "$API$PRESENCE/etudiant/";
-  static const GET_ALL_BY_MATIERE = "$API$PRESENCE/matiere/";
-  static const UPDATE_PRESENCE = "$API$PRESENCE/";
-  static const GET_ALL_BY_DATE_PRESENCE = "$API$PRESENCE/getAll/";
-  static const DELETE_PRESENCE = "$API$PRESENCE/delete/";
+  // for questions
+  static const QUESTION = "/Question";
+  static const SAVE_QUESTION = "$API$QUESTION/add/";
+  static const UPDATE_QUESTION = "$API$QUESTION/";
+  static const GET_ALL = "$API$QUESTION/";
+  static const GET_ONE_QUESTION = "$API$QUESTION/";
+  static const DELETE_QUESTION = "$API$QUESTION/delete/";
 
-  // for Salle
-  static const SALLE = "/salle";
-  static const SAVE_SALLE = "$API$SALLE/save";
-  static const LIST_SALLE = "$API$SALLE/getAll";
-  static const UPDATE_SALLE = "$API$SALLE/";
-  static const GET_ONE_SALLE = "$API$SALLE/getOne/";
-  static const GET_ONE_SALLE_BY_ENS = "$API$SALLE/byEns/";
-  static const DELETE_SALLE = "$API$SALLE/delete/";
+  // for epreuve
+  static const EPREUVE = "/Epreuve";
+  static const SAVE_EPREUVE = "$API$EPREUVE/add/";
+  static const LIST_EPREUVE = "$API$EPREUVE/";
+  static const UPDATE_EPREUVE = "$API$EPREUVE/update";
+  static const GET_ONE_EPREUVE = "$API$EPREUVE/";
+  static const DELETE_EPREUVE = "$API$EPREUVE/delete/";
+  static const GET_QUESTION = "$API$EPREUVE/questions/";
+   static const ADD_QUESTION_TO_EPREUVE = "$API$EPREUVE/addQuestionToEpreuve";
+
+
+  // for evaluation
+  static const EVALUATION = "/Evaluation";
+  static const SAVE_EVALUATION = "$API$EVALUATION/add/";
+  static const LIST_EVALUATION = "$API$EVALUATION/";
+  static const UPDATE_EVALUATION = "$API$EVALUATION/update";
+  static const GET_ONE_EVALUATION = "$API$EVALUATION/";
+  static const DELETE_EVALUATION = "$API$EVALUATION/delete/";
 
   // //   for user
   // static const USER = "/enseignant";

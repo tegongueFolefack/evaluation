@@ -1,10 +1,13 @@
+
+import 'package:attendance/Services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:attendance/Screens/Etudiant/EtudiantRegistrationPage.dart';
-import 'package:attendance/Screens/Enseignant/Enseignant.dart';
-import 'package:attendance/services/UserService.dart'; // Importez votre service d'utilisateur
-import 'package:attendance/Models/AuthenticateRequest/User.dart'; // Importez votre modèle UserModel
-import 'package:attendance/Screens/Admin/liste.dart'; // Importez la page SevenBlocksView
+import 'package:attendance/Screens/Enseignant/EnseignantRegistration.dart';
+import 'package:attendance/Models/Authentication/AuthenticationRequest/AuthenticationRequest.dart'; // Importez votre modèle UserModel
+import 'package:attendance/Screens/Admin/liste.dart'; 
+import 'package:attendance/Screens/Epreuves/ListEpreuve.dart'; 
+import 'package:attendance/Screens/Question/ListQuestion.dart'; 
 
 class MyCustomLoginUI extends StatefulWidget {
   const MyCustomLoginUI({super.key});
@@ -18,18 +21,39 @@ class _MyCustomLoginUIState extends State<MyCustomLoginUI> {
   final TextEditingController _pwdController = TextEditingController();
 
   Future<void> _login() async {
-    String email = _mailController.text;
-    String password = _pwdController.text;
+  String email = _mailController.text.trim();
+  String password = _pwdController.text.trim();
 
-    // Créer un objet UserModel avec email et password
-    var user = UserModel(email: email, password: password);
-     Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => SevenBlocksView()),
-        );
-    
-   
+  if (email.isEmpty || password.isEmpty) {
+    print('Veuillez entrer votre email et votre mot de passe.');
+    return;
   }
+
+  var request = RequestModel(email: email, password: password);
+
+  try {
+    var response = await AuthService.authenticate(request);
+
+    List<String>? roles = response.roles; // Ajouter le '?' pour indiquer que la liste peut être null
+
+    if (roles != null) { // Vérifier si la liste de rôles n'est pas null
+      if (roles.contains('ROLE_ADMIN')) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SevenBlocksView()));
+      } else if (roles.contains('ROLE_ENSEIGNANT')) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const EpreuveListView()));
+      } else if (roles.contains('ROLE_ETUDIANT')) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const QuestionListView()));
+      } else {
+        print('Rôle non reconnu.');
+      }
+    } else {
+      print('Liste de rôles null.');
+    }
+  } catch (e) {
+    
+    throw Exception('Erreur lors de authentification: $e');
+  }
+}
 
   @override
   Widget build(BuildContext context) {

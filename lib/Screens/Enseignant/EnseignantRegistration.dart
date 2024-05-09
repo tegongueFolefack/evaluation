@@ -17,7 +17,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
   late TextEditingController _passwordController;
   late TextEditingController _loginController;
   late TextEditingController _telephoneController;
-
+  late TextEditingController _datePriseEnsController;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -29,6 +29,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
     _passwordController = TextEditingController();
     _loginController = TextEditingController();
     _telephoneController = TextEditingController();
+     _datePriseEnsController = TextEditingController();
   }
 
   @override
@@ -39,6 +40,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
     _passwordController.dispose();
     _loginController.dispose();
     _telephoneController.dispose();
+    _datePriseEnsController.dispose();
     super.dispose();
   }
 
@@ -46,7 +48,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Enregistrer un étudiant'),
+        title: const Text('Enregistrer un Enseignant'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -60,7 +62,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                 decoration: const InputDecoration(labelText: 'Nom'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez saisir le nom de l\'étudiant';
+                    return 'Veuillez saisir le nom de l\'Enseignant';
                   }
                   return null;
                 },
@@ -70,7 +72,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                 decoration: const InputDecoration(labelText: 'Prénom'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez saisir le prénom de l\'étudiant';
+                    return 'Veuillez saisir le prénom de l\'Enseignant';
                   }
                   return null;
                 },
@@ -80,7 +82,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                 decoration: const InputDecoration(labelText: 'Email'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez saisir l\'email de l\'étudiant';
+                    return 'Veuillez saisir l\'email de l\'Enseignant';
                   }
                   return null;
                 },
@@ -90,7 +92,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                 decoration: const InputDecoration(labelText: 'Mot de passe'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez saisir le mot de passe de l\'étudiant';
+                    return 'Veuillez saisir le mot de passe de l\'Enseignant';
                   }
                   return null;
                 },
@@ -100,7 +102,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                 decoration: const InputDecoration(labelText: 'Login'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez saisir le login de l\'étudiant';
+                    return 'Veuillez saisir le login de l\'Enseignant';
                   }
                   return null;
                 },
@@ -111,7 +113,7 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                 decoration: const InputDecoration(labelText: 'Téléphone'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Veuillez saisir le numéro de téléphone de l\'étudiant';
+                    return 'Veuillez saisir le numéro de téléphone de l\'Enseignant';
                   }
                   return null;
                 },
@@ -122,20 +124,24 @@ class _EnseignantRegistrationPageState extends State<EnseignantRegistrationPage>
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Si le formulaire est valide, on crée un nouvel étudiant
+                     // DateTime selectedDate = DateTime.parse(_datePriseEnsController.text);
                       EnseignantModel newEnseignant = EnseignantModel(
+                        
                         nom: _nomController.text,
                         prenom: _prenomController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                         login: _loginController.text,
-                        telephone: int.parse(_telephoneController.text),
+                        telephone: _telephoneController.text,
+                        datePriseEns: _datePriseEnsController.text,
+
                       );
 
                       // Envoi de l'étudiant au service pour enregistrement
                       EnseignantService().saveEnseignant(newEnseignant).then((response) {
                         // Affichage d'un message de succès
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Étudiant enregistré avec succès')),
+                          const SnackBar(content: Text('Enseignant enregistré avec succès')),
                         );
                         // Effacer les champs du formulaire
                         _nomController.clear();
